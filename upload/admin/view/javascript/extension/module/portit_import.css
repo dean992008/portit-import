@@ -1,0 +1,20 @@
+.portit-import__files-list{
+    list-style: none;
+    padding: 0;
+}
+.portit-import__files-item-remove{
+    display: inline-block;
+    margin-left: 7px;
+}
+.portit-import__dropzone{
+    padding: 5px 0;
+    margin: 10px 0;
+    text-align: center;
+    background: #ddd;
+}
+/* .portit-import__dropzone:before{
+
+} */
+.portit-import__dropzone .dz-preview{
+    display: none !important;
+}
