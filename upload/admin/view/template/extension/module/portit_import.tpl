@@ -29,13 +29,13 @@
         <div class="row">
           <div class="col-lg-4">
             <p>Загрузка в Market</p>
-            <form action="/file-upload" class="portit-import__dropzone">
+            <form action="/file-upload" class="portit-import__dropzone" id="market">
               <div class="fallback">
                 <input name="file" type="file" multiple />
               </div>
               <div class="dz-message" data-dz-message><span>Нажмите или перетащите сюда файлы для загрузки</span></div>
             </form>
-            <p>Содержимое папки Market</p>
+            <p>Содержимое папки Market:</p>
             <ul class="portit-import__files-list" id="filesListMarket">
               <?php foreach ($marketFilesList as $file) { ?>
                 <li>
@@ -46,23 +46,52 @@
           </div>
           <div class="col-lg-4">
             <p>Загрузка в Options</p>
-            <form action="/file-upload" class="portit-import__dropzone">
+            <form action="/file-upload" class="portit-import__dropzone" id="options">
               <div class="fallback">
                 <input name="file" type="file" multiple />
               </div>
               <div class="dz-message" data-dz-message><span>Нажмите или перетащите сюда файлы для загрузки</span></div>
             </form>
+            <p>Содержимое папки Options:</p>
+            <ul class="portit-import__files-list" id="filesListOptions">
+              <?php foreach ($marketFilesOptions as $file) { ?>
+                <li>
+                  <span><?php echo $file; ?></span><a href="#<?php echo $file; ?>" class="portit-import__files-item-remove" data-dir="options">Удалить</a>
+                </li>
+              <?php } ?>
+            </ul>
           </div>
           <div class="col-lg-4">
             <p>Загрузка в Prices</p>
-            <form action="/file-upload" class="portit-import__dropzone">
+            <form action="/file-upload" class="portit-import__dropzone" id="prices">
               <div class="fallback">
                 <input name="file" type="file" multiple />
               </div>
               <div class="dz-message" data-dz-message><span>Нажмите или перетащите сюда файлы для загрузки</span></div>
             </form>
+            <p>Содержимое папки Prices</p>
+            <ul class="portit-import__files-list" id="filesListPrices">
+              <?php foreach ($marketFilesPrices as $file) { ?>
+                <li>
+                  <span><?php echo $file; ?></span><a href="#<?php echo $file; ?>" class="portit-import__files-item-remove" data-dir="prices">Удалить</a>
+                </li>
+              <?php } ?>
+            </ul>
           </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row text-center">
+          <div class="col-sm-6 col-xs-12">
+            <a href="/script/script.php" class="btn btn-primary">Обработать прайсы</a>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <a href="/script/script_options.php" class="btn btn-primary">Обработать опции</a>
+          </div>
+        </div>
+        <br><br>
 		    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-portit_import" class="form-horizontal">
         </form>
       </div>

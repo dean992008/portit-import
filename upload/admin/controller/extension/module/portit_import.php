@@ -75,6 +75,9 @@ class ControllerExtensionModulePortitImport extends Controller {
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['marketFilesList'] = $this->model_extension_portit_import->getListOfMarket();
+		$data['marketFilesOptions'] = $this->model_extension_portit_import->getListOfOptions();
+		$data['marketFilesPrices'] = $this->model_extension_portit_import->getListOfPrices();
+
 		$data['token'] = $this->session->data['token'];
 
 	
@@ -107,6 +110,20 @@ class ControllerExtensionModulePortitImport extends Controller {
 		return $this->model_extension_portit_import->addFile($uploadfile);
 	}
 
+	public function addFileOptions(){
+		$this->load->model('extension/portit_import');
+		$json = array();
+		$uploadfile = dirname(DIR_APPLICATION).'/script/options/' . basename($_FILES['file']['name']);
+		return $this->model_extension_portit_import->addFile($uploadfile);
+	}
+
+	public function addFilePrices(){
+		$this->load->model('extension/portit_import');
+		$json = array();
+		$uploadfile = dirname(DIR_APPLICATION).'/script/prices/' . basename($_FILES['file']['name']);
+		return $this->model_extension_portit_import->addFile($uploadfile);
+	}
+
 	public function removeFile() {
 		$this->load->model('extension/portit_import');
 		$this->model_extension_portit_import->removeFile($_POST['filename'], $_POST['dir']);
@@ -118,7 +135,16 @@ class ControllerExtensionModulePortitImport extends Controller {
 		$this->load->model('extension/portit_import');
 		echo json_encode( $this->model_extension_portit_import->getListOfMarket() );
 	}
-	
+
+	public function listOfOptions(){
+		$this->load->model('extension/portit_import');
+		echo json_encode( $this->model_extension_portit_import->getListOfOptions() );
+	}
+
+	public function listOfPrices(){
+		$this->load->model('extension/portit_import');
+		echo json_encode( $this->model_extension_portit_import->getListOfPrices() );
+	}
 	/*
 	 * 
 	 * Check that user actions are authorized
