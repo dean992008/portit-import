@@ -40,6 +40,22 @@ class ControllerExtensionModulePortitImport extends Controller {
 		foreach ($text_strings as $text) {
 			$data[$text] = $this->language->get($text);
 		}
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
 		
 	
 		//error handling
@@ -77,6 +93,12 @@ class ControllerExtensionModulePortitImport extends Controller {
 		$data['marketFilesList'] = $this->model_extension_portit_import->getListOfMarket();
 		$data['marketFilesOptions'] = $this->model_extension_portit_import->getListOfOptions();
 		$data['marketFilesPrices'] = $this->model_extension_portit_import->getListOfPrices();
+		$data['marketFilesDone'] = $this->model_extension_portit_import->getListOfDone();
+
+		$data['linkProcessPriceses'] = $this->url->link('extension/module/portit_import/processpriceses', 'token=' . $this->session->data['token'], 'SSL');
+		$data['linkProcessAttribute'] = $this->url->link('extension/module/portit_import/processattribute', 'token=' . $this->session->data['token'], 'SSL');
+		$data['linkClearAttribute'] = $this->url->link('extension/module/portit_import/clearattribute', 'token=' . $this->session->data['token'], 'SSL');
+		$data['linkGenerateDone'] = $this->url->link('extension/module/portit_import/generateDone', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['token'] = $this->session->data['token'];
 
@@ -144,6 +166,44 @@ class ControllerExtensionModulePortitImport extends Controller {
 	public function listOfPrices(){
 		$this->load->model('extension/portit_import');
 		echo json_encode( $this->model_extension_portit_import->getListOfPrices() );
+	}
+
+	public function processPriceses(){
+		$this->load->model('extension/portit_import');
+		if($this->model_extension_portit_import->script()){
+			$this->session->data['success'] = 'Очистка атрибутов завершина!';
+		} else {
+			$this->session->data['error'] = 'Произошла ошибка!';
+		}
+		$this->response->redirect($this->url->link('extension/module/portit_import', 'token=' . $this->session->data['token'], true));
+	}
+
+	public function processAttribute() {
+		$this->load->model('extension/portit_import');
+		if($this->model_extension_portit_import->script()){
+			$this->session->data['success'] = 'Файлы опций обработаны!';
+		} else {
+			$this->session->data['error'] = 'Произошла ошибка!';
+		}
+		$this->response->redirect($this->url->link('extension/module/portit_import', 'token=' . $this->session->data['token'], true));
+	}	
+
+	public function clearAttribute(){
+		$this->load->model('extension/portit_import');
+		if($this->model_extension_portit_import->clearAttribute()){
+			$this->session->data['success'] = 'Очистка атрибутов завершина!';
+		}
+		$this->response->redirect($this->url->link('extension/module/portit_import', 'token=' . $this->session->data['token'], true));
+	}
+
+	public function generateDone(){
+		$this->load->model('extension/portit_import');
+		if($this->model_extension_portit_import->clearAttribute()){
+			$this->session->data['success'] = 'Очистка атрибутов завершина!';
+		} else {
+			$this->session->data['error'] = 'Произошла ошибка!';	
+		}
+		$this->response->redirect($this->url->link('extension/module/portit_import', 'token=' . $this->session->data['token'], true));
 	}
 	/*
 	 * 

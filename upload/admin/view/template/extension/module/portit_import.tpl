@@ -15,16 +15,20 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-cogs"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="portit-import panel-body">
-        <!-- <p><?php echo $placeholder; ?></p> -->
         <input type="hidden" id="token" value="<?php echo $token; ?>">
         <div class="row">
           <div class="col-lg-4">
@@ -84,11 +88,30 @@
         <br>
         <br>
         <div class="row text-center">
-          <div class="col-sm-6 col-xs-12">
-            <a href="/script/script.php" class="btn btn-primary">Обработать прайсы</a>
+          <div class="col-sm-3 col-xs-12">
+            <a href="<?php echo $linkProcessPriceses; ?>" class="btn btn-primary">Обработать прайсы</a>
           </div>
-          <div class="col-sm-6 col-xs-12">
-            <a href="/script/script_options.php" class="btn btn-primary">Обработать опции</a>
+          <div class="col-sm-3 col-xs-12">
+            <a href="<?php echo $linkProcessAttribute; ?>" class="btn btn-primary">Обработать опции</a>
+          </div>
+          <div class="col-sm-3 col-xs-12">
+            <a href="<?php echo $linkClearAttribute; ?>" class="btn btn-primary">Очистить атрибуты</a>
+          </div>
+          <div class="col-sm-3 col-xs-12">
+            <a href="<?php echo $linkGenerateDone; ?>" class="btn btn-primary">Сгенерировать файлы Done</a>
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-sm-2 col-sm-offset-5 col-xs-12">
+              <p>Файлы папки Done</p>
+              <ul class="portit-import__files-list">
+                <?php foreach ($marketFilesDone as $file) { ?>
+                  <li>
+                    <a href="/script/done/<?php echo $file ?>" download><?php echo $file; ?></a>
+                  </li>
+                <?php } ?>
+              </ul>
           </div>
         </div>
         <br><br>
