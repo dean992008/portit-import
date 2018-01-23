@@ -171,7 +171,7 @@ class ControllerExtensionModulePortitImport extends Controller {
 	public function processPriceses(){
 		$this->load->model('extension/portit_import');
 		if($this->model_extension_portit_import->script()){
-			$this->session->data['success'] = 'Очистка атрибутов завершина!';
+			$this->session->data['success'] = 'Обработка прайсов завершена!';
 		} else {
 			$this->session->data['error'] = 'Произошла ошибка!';
 		}
@@ -180,7 +180,7 @@ class ControllerExtensionModulePortitImport extends Controller {
 
 	public function processAttribute() {
 		$this->load->model('extension/portit_import');
-		if($this->model_extension_portit_import->script()){
+		if($this->model_extension_portit_import->scriptAttribute()){
 			$this->session->data['success'] = 'Файлы опций обработаны!';
 		} else {
 			$this->session->data['error'] = 'Произошла ошибка!';
@@ -198,8 +198,8 @@ class ControllerExtensionModulePortitImport extends Controller {
 
 	public function generateDone(){
 		$this->load->model('extension/portit_import');
-		if($this->model_extension_portit_import->clearAttribute()){
-			$this->session->data['success'] = 'Очистка атрибутов завершина!';
+		if($this->model_extension_portit_import->generateDone()){
+			$this->session->data['success'] = 'Генерация файлов завершена!';
 		} else {
 			$this->session->data['error'] = 'Произошла ошибка!';	
 		}

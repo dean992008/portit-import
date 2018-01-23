@@ -100,45 +100,60 @@ class ModelExtensionPortitImport extends Model {
         define('PRICES_FOLDER', dirname(DIR_APPLICATION).'/script/prices');
         define('MARKETS_FOLDER', dirname(DIR_APPLICATION).'/script/market');
         define('DONE_FOLDER', dirname(DIR_APPLICATION).'/script/done');
-        $market_xlsx = new SpreadsheetReader(MARKETS_FOLDER.'/'.$market_file);
-        $market_header = array();
-        $market_stock_id = false;
-        $market_data = array();
-        foreach ($market_xlsx as $row) {
-            $market_header = $row;
-            foreach ($market_header as $idx => $title) {
-                if ($title !== 'Stock')
+
+        $markets = array();
+        if ($opendir = opendir(MARKETS_FOLDER)) {
+            while (false !== ($ff = readdir($opendir))) {
+                if ($ff == '.' or $ff == '..')
                     continue;
-                $market_stock_id = $idx;
-                break;    
+                $markets[] = $ff;
             }
-            break;
         }
-        $market_header = array_flip($market_header);
-        foreach ($market_header as $title => $type) {
-            $market_header[$title] = 'string';
-        }
-        foreach ($market_xlsx as $row) {
-            $market_data[] = $row;
-        }
-        unset($market_data[0]);
-        $market_data = array_values($market_data);
-        foreach ($market_data as $key => $data) {
-            $this_art = trim($data[0]);
-            if (!isset($affect_art[$this_art]))
-                continue;
-            $market_data[$key][$market_stock_id] = $affect_art[$this_art];
-        }
-        if (sizeof($market_data) == 0)
+        if (empty($markets)) {
             return false;
-        $done_file = $market_file;
-        $done_file = trim(str_replace('.xlsx', '_done.xlsx', $done_file));
-        $writer = new XLSXWriter();
-        $writer->writeSheetHeader('Sheet1', $market_header);
-        foreach ($market_data as $key => $data) {
-            $writer->writeSheetRow('Sheet1', $data);	
         }
-        $writer->writeToFile(DONE_FOLDER.'/'.$done_file);
+        foreach ($markets as $market_file) {
+            $market_file = trim($market_file);
+            $market_xlsx = new SpreadsheetReader(MARKETS_FOLDER.'/'.$market_file);
+            $market_header = array();
+            $market_stock_id = false;
+            $market_data = array();
+            foreach ($market_xlsx as $row) {
+                $market_header = $row;
+                foreach ($market_header as $idx => $title) {
+                    if ($title !== 'Stock')
+                        continue;
+                    $market_stock_id = $idx;
+                    break;    
+                }
+                break;
+            }
+            $market_header = array_flip($market_header);
+            foreach ($market_header as $title => $type) {
+                $market_header[$title] = 'string';
+            }
+            foreach ($market_xlsx as $row) {
+                $market_data[] = $row;
+            }
+            unset($market_data[0]);
+            $market_data = array_values($market_data);
+            foreach ($market_data as $key => $data) {
+                $this_art = trim($data[0]);
+                if (!isset($affect_art[$this_art]))
+                    continue;
+                $market_data[$key][$market_stock_id] = $affect_art[$this_art];
+            }
+            if (sizeof($market_data) == 0)
+                return false;
+            $done_file = $market_file;
+            $done_file = trim(str_replace('.xlsx', '_done.xlsx', $done_file));
+            $writer = new XLSXWriter();
+            $writer->writeSheetHeader('Sheet1', $market_header);
+            foreach ($market_data as $key => $data) {
+                $writer->writeSheetRow('Sheet1', $data);	
+            }
+            $writer->writeToFile(DONE_FOLDER.'/'.$done_file);
+        }
         return true;
     }
 
