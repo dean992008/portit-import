@@ -89,17 +89,21 @@
         <br>
         <div class="row text-center">
           <div class="col-sm-3 col-xs-12">
-            <a href="<?php echo $linkProcessPriceses; ?>" class="btn btn-primary">Обработать прайсы</a>
+            <a href="<?php echo $linkProcessPriceses; ?>" class="btn btn-success">Обработать прайсы</a>
           </div>
           <div class="col-sm-3 col-xs-12">
-            <a href="<?php echo $linkProcessAttribute; ?>" class="btn btn-primary">Обработать опции</a>
+            <a href="<?php echo $linkProcessAttribute; ?>" class="btn btn-success">Правка атрибутов</a>
           </div>
           <div class="col-sm-3 col-xs-12">
-            <a href="<?php echo $linkClearAttribute; ?>" class="btn btn-primary">Очистить атрибуты</a>
+            <a href="<?php echo $linkClearAttribute; ?>" class="btn btn-danger">Очистить атрибуты</a>
+            <br>
+            <br>
+            <a href="<?php echo $linkСlearOptions; ?>" class="btn btn-danger">Очистить опции</a>
           </div>
           <div class="col-sm-3 col-xs-12">
             <a href="<?php echo $linkGenerateDone; ?>" class="btn btn-primary">Сгенерировать файлы Done</a>
           </div>
+          
         </div>
         <br><br>
         <div class="row">

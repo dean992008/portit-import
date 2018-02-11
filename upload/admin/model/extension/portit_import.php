@@ -225,4 +225,9 @@ class ModelExtensionPortitImport extends Model {
         $this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'product_attribute');
         return true;
     }
+
+    public function clearOptions(){
+        $this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'product_option');
+        return true;
+    }
 }
